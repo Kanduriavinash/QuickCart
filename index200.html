@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Cards</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6f6f6;
+      margin: 30px;
+    }
+    .container {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 20px;
+      padding: 15px;
+      width: 330px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      position: relative;
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+
+    }
+    .category {
+      font-size: 12px;
+      color: #666;
+      margin-top: 10px;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 5px 0;
+      color: #333;
+    }
+    .stars {
+      color: #ffb400;
+      font-size: 14px;
+    }
+    .price {
+      margin-top: 5px;
+    }
+    .new-price {
+      color: #03a685;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .old-price {
+      color: #999;
+      text-decoration: line-through;
+      font-size: 14px;
+      margin-left: 10px;
+    }
+    .cart-icon {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background: #e6f4ec;
+      border-radius: 50%;
+      padding: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <div class="card">
+      
+      <img src="111.png" alt="laptop">
+      <div class="category">Accesories</div>
+      <div class="title">Acer Predator Helios 16 Gaming Laptop 14th Gen Intel Core i9 Processor (Windows 11 Home/16 GB/1 TB SSD/NVIDIA GeForce RTX 4070) PH16-72 with 40.64 cm (16") WQXGA Display</div>
+      <div class="stars">★★★★☆</div>
+      <div class="price">
+        <span class="new-price">₹1,84,990</span>
+        <span class="old-price">₹2,44,999</span>
+      </div>
+      <div class="cart-icon">🛒</div>
+    </div>
+
+    <div class="card">
+      
+      <img src="112.png" alt="laptop">
+      <div class="category">Accesories</div>
+      <div class="title">HP Victus Gaming, 13th Gen Intel Core i5-13420H, 6GB NVIDIA RTX 3050,16GB DDR4, 512GB SSD, 15.6", 144Hz, 9MS, IPS, FHD Gaming Laptop, Backlit KB (Win 11, Office 21, Silver, 2.29kg) fa1198TX</div>
+      <div class="stars">★★★★★</div>
+      <div class="price">
+        <span class="new-price">₹68,999</span>
+        <span class="old-price">₹93,998</span>
+      </div>
+      <div class="cart-icon">🛒</div>
+    </div>
+
+    <div class="card">
+      
+      <img src="113.png" alt="laptop">
+      <div class="category">Accesories</div>
+      <div class="title">ASUS ROG Strix G16 (2023) 90WHr Battery, Intel Core i7-13650HX 13th Gen, 16" FHD+ 165Hz, 6GB RTX 4050, Gaming Laptop (16GB/1TB SSD/Windows 11/Office...</div>
+      <div class="stars">★★★★★</div>
+      <div class="price">
+        <span class="new-price">₹1,09,999</span>
+        <span class="old-price">₹1,99,999</span>
+      </div>
+      <div class="cart-icon">🛒</div>
+    </div>
+
+    <div class="card">
+      
+      <img src="114.png" alt="laptop">
+      <div class="category">Accesories</div>
+      <div class="title">Dell (Smartchoice) Inspiron 3530 Thin & Light Laptop, 13th Gen Intel Core i5-1334U Processor,16GB, 1TB SSD, 15.6" (39.62cm) FHD Display, Backlit KB, Windows 11 + MSO'24 & 15 Month McAfee,Silver,1.62kg</div>
+      <div class="stars">★★★★☆</div>
+      <div class="price">
+        <span class="new-price">₹56,999</span>
+        <span class="old-price">₹64,999</span>
+      </div>
+      <div class="cart-icon">🛒</div>
+    </div>
+
+    <div class="card">
+      
+      <img src="115.png" alt="laptop">
+      <div class="category">Accesories</div>
+      <div class="title">HP Pavilion Laptop, Intel Core Ultra 5 125U 16-inch (40 cm), WUXGA, 300 nits, 16GB LPDDR5,1TB SSD, Intel Graphics, 1080p FHD IR Camera, Backlit Kb, (Win 11, Silver, 1.77 kg), 16-af0056TU</div>
+      <div class="stars">★★★★☆</div>
+      <div class="price">
+        <span class="new-price">₹61,999</span>
+        <span class="old-price">₹89,999</span>
+      </div>
+      <div class="cart-icon">🛒</div>
+    </div>
+
+    <div class="card">
+      
+      <img src="116.png" alt="laptop">
+      <div class="category">Accesories</div>
+      <div class="title">HP Laptop Ultra 7-155H, 32GB RAM, 1TB SSD, RTX 1000 Ada 6GB, Win 11 Pro, 16" WUXGA, 5MP+IR Cam, Fingerprint Sensor, Backlit Keyboard, Wi-Fi 6E, BT 5.3, 3-Year Warranty (A8WN0PT)</div>
+      <div class="stars">★★★★☆</div>
+      <div class="price">
+        <span class="new-price">₹1,91,999</span>
+        <span class="old-price">₹2,89,999</span>
+      </div>
+      <div class="cart-icon">🛒</div>
+    </div>
+
+    <div class="card">
+      
+      <img src="117.png" alt="laptop">
+      <div class="category">Accesories</div>
+      <div class="title">Dell G15-5530 Gaming Laptop, 13th Gen Intel Core i5-13450HX| NVIDIA RTX 3050, 6GB (16GB RAM|1TB SSD, FHD|Window 11|MS Office' 21|15.6" (39.62cm)|Orange Backlit Keyboard& G-Key|Dark Shadow Grey|2.65Kg</div>
+      <div class="stars">★★★★☆</div>
+      <div class="price">
+        <span class="new-price">₹80,999</span>
+        <span class="old-price">₹99,999</span>
+      </div>
+      <div class="cart-icon">🛒</div>
+    </div>
+
+    <div class="card">
+      
+      <img src="118.png" alt="laptop">
+      <div class="category">Accesorries</div>
+      <div class="title">Microsoft New Surface Laptop (7th Edition) - Windows 11 Home Copilot + PC - 13.8” LCD PixelSense Touchscreen - Qualcomm Snapdragon X Plus (10 Core) - 16GB RAM - 256GB SSD - Platinum - ZGJ-00023</div>
+      <div class="stars">★★★★☆</div>
+      <div class="price">
+        <span class="new-price">₹1,13,999</span>
+        <span class="old-price">₹1,99,999</span>
+      </div>
+      
+
+      <div class="cart-icon">🛒</div>
+    </div>
+    <div class="card">
+      
+      <img src="119.png" alt="laptop">
+      <div class="category">Accessories</div>
+      <div class="title">Samsung Galaxy Book4 (Gray, 16GB RAM, 512GB SSD) | 15.6" Full HD Screen | Intel Core i5 1335U Processor | Windows 11 Home | MS Office 2021 | Fingerprint Reader | Intel Iris XE Graphics | RJ45 LAN Port</div>
+      <div class="stars">★★★★☆</div>
+      <div class="price">
+        <span class="new-price">₹58,999</span>
+        <span class="old-price">₹80,999</span>
+      </div>
+      <div class="cart-icon">🛒</div>
+    </div>
+    <div class="card">
+      
+      <img src="120.png" alt="laptop">
+      <div class="category">Accesories</div>
+      <div class="title">Primebook 4G, 2025(New, WiFi+4G) Android Based MediaTek MT8788 - (PrimeOS) 4G SIM Slot, Thin and Light Laptop (11.6 Inch, 1.065 Kg, Type C, USB, HDMI, MicroSD) (4GB/64GB eMMC Storage, Black)</div>
+      <div class="stars">★★★★☆</div>
+      <div class="price">
+        <span class="new-price">₹32,999</span>
+        <span class="old-price">₹40,999</span>
+      </div>
+      <div class="cart-icon">🛒</div>
+    </div>
+
+  </div>
+</body>
+</html>
