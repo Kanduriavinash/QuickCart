@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quick Cart - Log Out</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #f8f8fa;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .logout-container {
+      background: #fff;
+      padding: 40px 36px;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+      text-align: center;
+    }
+    .logout-title {
+      font-size: 2em;
+      font-weight: bold;
+      color: #65000b;
+      margin-bottom: 20px;
+    }
+    .logout-btn {
+      background: #65000b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 15px 40px;
+      font-size: 1.15em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 14px;
+    }
+    .logout-btn:hover {
+      background: #a0302f;
+    }
+    .logout-message {
+      color: #0a7f4f;
+      font-weight: bold;
+      margin-top: 24px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="logout-container">
+    <div class="logout-title">Log Out</div>
+    <p>Are you sure you want to log out of your Quick Cart account?</p>
+    <button class="logout-btn" onclick="logout()">Log Out</button>
+    <div class="logout-message" id="logoutMsg">You have been logged out. See you soon!</div>
+  </div>
+  <script>
+    function logout() {
+      document.querySelector('.logout-btn').style.display = 'none';
+      document.getElementById('logoutMsg').style.display = 'block';
+      // Here you can add your real logout logic, e.g.:
+      // window.location.href = '/login';
+    }
+  </script>
+</body>
+</html>

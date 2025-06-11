@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quick Cart - Wishlist / Saved for Later</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #f8f8fa;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    .wishlist-section {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 24px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+    }
+    .wishlist-title {
+      font-size: 2em;
+      font-weight: bold;
+      color: #65000b;
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+    }
+    .wishlist-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .wishlist-item {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      background: #faf6f8;
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 2px 8px #65000b11;
+      position: relative;
+    }
+    .wishlist-heart {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      z-index: 2;
+      transition: transform 0.2s;
+    }
+    .wishlist-heart svg {
+      width: 100%;
+      height: 100%;
+      stroke: #65000b;
+      stroke-width: 2;
+      fill: #fff;
+      transition: fill 0.2s, stroke 0.2s;
+    }
+    .wishlist-heart:hover svg {
+      fill: #65000b;
+      stroke: #fff;
+    }
+    .wishlist-img {
+      width: 110px;
+      height: 110px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #eee;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px #65000b22;
+    }
+    .wishlist-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .wishlist-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .wishlist-name {
+      font-size: 1.18em;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 2px;
+    }
+    .wishlist-brand {
+      color: #888;
+      font-size: 0.97em;
+      margin-bottom: 5px;
+    }
+    .wishlist-price {
+      color: #65000b;
+      font-size: 1.08em;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .wishlist-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 8px;
+    }
+    .wishlist-btn {
+      background: #65000b;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 18px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .wishlist-btn:hover {
+      background: #a0302f;
+    }
+    .wishlist-remove {
+      background: #fff;
+      color: #65000b;
+      border: 2px solid #65000b;
+    }
+    .wishlist-remove:hover {
+      background: #65000b;
+      color: #fff;
+    }
+    @media (max-width: 700px) {
+      .wishlist-section { padding: 8px; }
+      .wishlist-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .wishlist-img { width: 90px; height: 90px; }
+      .wishlist-heart { top: 10px; right: 10px; width: 22px; height: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wishlist-section">
+    <div class="wishlist-title">Wishlist / Saved for Later</div>
+    <div class="wishlist-list">
+      <!-- Item 1 -->
+      <div class="wishlist-item">
+        <div class="wishlist-heart" title="Wishlisted">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s-5.5-4.4-8-7.2C1.5 11.1 1 8.6 2.7 6.9 4.4 5.2 7 5.5 8.5 7c1.5-1.5 4.1-1.8 5.8 0 1.5-1.5 4.1-1.8 5.8 0 1.7 1.7 1.2 4.2-1.3 6.9-2.5 2.8-8 7.1-8 7.1z"/>
+          </svg>
+        </div>
+        <div class="wishlist-img">
+          <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" alt="Handbag">
+        </div>
+        <div class="wishlist-info">
+          <div class="wishlist-name">Rosewood Leather Handbag</div>
+          <div class="wishlist-brand">Brand: Quick Cart</div>
+          <div class="wishlist-price">₹4,999</div>
+          <div class="wishlist-actions">
+            <button class="wishlist-btn">Move to Cart</button>
+            <button class="wishlist-btn wishlist-remove">Remove</button>
+          </div>
+        </div>
+      </div>
+      <!-- Item 2 -->
+      <div class="wishlist-item">
+        <div class="wishlist-heart" title="Wishlisted">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s-5.5-4.4-8-7.2C1.5 11.1 1 8.6 2.7 6.9 4.4 5.2 7 5.5 8.5 7c1.5-1.5 4.1-1.8 5.8 0 1.5-1.5 4.1-1.8 5.8 0 1.7 1.7 1.2 4.2-1.3 6.9-2.5 2.8-8 7.1-8 7.1z"/>
+          </svg>
+        </div>
+        <div class="wishlist-img">
+          <img src="https://images.unsplash.com/photo-1513708927688-890fe41c3c34?auto=format&fit=crop&w=400&q=80" alt="Sneakers">
+        </div>
+        <div class="wishlist-info">
+          <div class="wishlist-name">Classic White Sneakers</div>
+          <div class="wishlist-brand">Brand: Adidas</div>
+          <div class="wishlist-price">₹2,799</div>
+          <div class="wishlist-actions">
+            <button class="wishlist-btn">Move to Cart</button>
+            <button class="wishlist-btn wishlist-remove">Remove</button>
+          </div>
+        </div>
+      </div>
+      <!-- Item 3 -->
+      <div class="wishlist-item">
+        <div class="wishlist-heart" title="Wishlisted">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s-5.5-4.4-8-7.2C1.5 11.1 1 8.6 2.7 6.9 4.4 5.2 7 5.5 8.5 7c1.5-1.5 4.1-1.8 5.8 0 1.5-1.5 4.1-1.8 5.8 0 1.7 1.7 1.2 4.2-1.3 6.9-2.5 2.8-8 7.1-8 7.1z"/>
+          </svg>
+        </div>
+        <div class="wishlist-img">
+          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Watch">
+        </div>
+        <div class="wishlist-info">
+          <div class="wishlist-name">Minimalist Rose Gold Watch</div>
+          <div class="wishlist-brand">Brand: Titan</div>
+          <div class="wishlist-price">₹3,499</div>
+          <div class="wishlist-actions">
+            <button class="wishlist-btn">Move to Cart</button>
+            <button class="wishlist-btn wishlist-remove">Remove</button>
+          </div>
+        </div>
+      </div>
+      <!-- Item 4 -->
+      <div class="wishlist-item">
+        <div class="wishlist-heart" title="Wishlisted">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s-5.5-4.4-8-7.2C1.5 11.1 1 8.6 2.7 6.9 4.4 5.2 7 5.5 8.5 7c1.5-1.5 4.1-1.8 5.8 0 1.5-1.5 4.1-1.8 5.8 0 1.7 1.7 1.2 4.2-1.3 6.9-2.5 2.8-8 7.1-8 7.1z"/>
+          </svg>
+        </div>
+        <div class="wishlist-img">
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Headphones">
+        </div>
+        <div class="wishlist-info">
+          <div class="wishlist-name">Wireless Headphones</div>
+          <div class="wishlist-brand">Brand: Boat</div>
+          <div class="wishlist-price">₹1,899</div>
+          <div class="wishlist-actions">
+            <button class="wishlist-btn">Move to Cart</button>
+            <button class="wishlist-btn wishlist-remove">Remove</button>
+          </div>
+        </div>
+      </div>
+      <!-- Item 5 -->
+      <div class="wishlist-item">
+        <div class="wishlist-heart" title="Wishlisted">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 21s-5.5-4.4-8-7.2C1.5 11.1 1 8.6 2.7 6.9 4.4 5.2 7 5.5 8.5 7c1.5-1.5 4.1-1.8 5.8 0 1.5-1.5 4.1-1.8 5.8 0 1.7 1.7 1.2 4.2-1.3 6.9-2.5 2.8-8 7.1-8 7.1z"/>
+          </svg>
+        </div>
+        <div class="wishlist-img">
+          <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Dress">
+        </div>
+        <div class="wishlist-info">
+          <div class="wishlist-name">Elegant Summer Dress</div>
+          <div class="wishlist-brand">Brand: Quick Cart</div>
+          <div class="wishlist-price">₹2,299</div>
+          <div class="wishlist-actions">
+            <button class="wishlist-btn">Move to Cart</button>
+            <button class="wishlist-btn wishlist-remove">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quick Cart - My Cart</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #f8f8fa;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    .cart-section {
+      max-width: 950px;
+      margin: 40px auto;
+      padding: 24px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+    }
+    .cart-title {
+      font-size: 2em;
+      font-weight: bold;
+      color: #65000b;
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+    }
+    .cart-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    .cart-item {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      background: #faf6f8;
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 2px 8px #65000b11;
+      position: relative;
+    }
+    .cart-img {
+      width: 110px;
+      height: 110px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #eee;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px #65000b22;
+    }
+    .cart-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cart-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .cart-name {
+      font-size: 1.18em;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 2px;
+    }
+    .cart-brand {
+      color: #888;
+      font-size: 0.97em;
+      margin-bottom: 5px;
+    }
+    .cart-price {
+      color: #65000b;
+      font-size: 1.08em;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .cart-qty-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .cart-qty-label {
+      color: #888;
+      font-size: 0.97em;
+    }
+    .cart-qty-input {
+      width: 50px;
+      padding: 6px 8px;
+      border: 1.5px solid #ccc;
+      border-radius: 6px;
+      font-size: 1em;
+      text-align: center;
+      margin-left: 4px;
+    }
+    .cart-subtotal {
+      color: #222;
+      font-size: 1.06em;
+      font-weight: bold;
+      margin-left: 18px;
+    }
+    .cart-remove {
+      background: #fff;
+      color: #65000b;
+      border: 2px solid #65000b;
+      border-radius: 6px;
+      padding: 7px 16px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      position: absolute;
+      top: 16px;
+      right: 18px;
+    }
+    .cart-remove:hover {
+      background: #65000b;
+      color: #fff;
+    }
+    .cart-summary {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 32px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .cart-total-label {
+      font-size: 1.1em;
+      color: #65000b;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+    }
+    .cart-total-value {
+      font-size: 1.25em;
+      color: #222;
+      font-weight: bold;
+      margin-right: 18px;
+    }
+    .cart-checkout-btn {
+      background: #65000b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 38px;
+      font-size: 1.15em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .cart-checkout-btn:hover {
+      background: #a0302f;
+    }
+    @media (max-width: 700px) {
+      .cart-section { padding: 8px; }
+      .cart-item { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .cart-img { width: 90px; height: 90px; }
+      .cart-remove { top: 10px; right: 10px; }
+      .cart-summary { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cart-section">
+    <div class="cart-title">My Cart</div>
+    <div class="cart-list" id="cartList">
+      <!-- Item 1 -->
+      <div class="cart-item" data-price="4999">
+        <div class="cart-img">
+          <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" alt="Handbag">
+        </div>
+        <div class="cart-info">
+          <div class="cart-name">Rosewood Leather Handbag</div>
+          <div class="cart-brand">Brand: Quick Cart</div>
+          <div class="cart-price">₹4,999</div>
+          <div class="cart-qty-row">
+            <span class="cart-qty-label">Qty:</span>
+            <input type="number" class="cart-qty-input" value="1" min="1" max="10" onchange="updateSubtotal(this)">
+            <span class="cart-subtotal">Subtotal: ₹4,999</span>
+          </div>
+        </div>
+        <button class="cart-remove" onclick="removeItem(this)">Remove</button>
+      </div>
+      <!-- Item 2 -->
+      <div class="cart-item" data-price="2799">
+        <div class="cart-img">
+          <img src="shoes_html/shoe2.jpg" alt="Sneakers">
+        </div>
+        <div class="cart-info">
+          <div class="cart-name">Classic White Sneakers</div>
+          <div class="cart-brand">Brand: Adidas</div>
+          <div class="cart-price">₹2,799</div>
+          <div class="cart-qty-row">
+            <span class="cart-qty-label">Qty:</span>
+            <input type="number" class="cart-qty-input" value="2" min="1" max="10" onchange="updateSubtotal(this)">
+            <span class="cart-subtotal">Subtotal: ₹5,598</span>
+          </div>
+        </div>
+        <button class="cart-remove" onclick="removeItem(this)">Remove</button>
+      </div>
+      <!-- Item 3 -->
+      <div class="cart-item" data-price="1899">
+        <div class="cart-img">
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Headphones">
+        </div>
+        <div class="cart-info">
+          <div class="cart-name">Wireless Headphones</div>
+          <div class="cart-brand">Brand: Boat</div>
+          <div class="cart-price">₹1,899</div>
+          <div class="cart-qty-row">
+            <span class="cart-qty-label">Qty:</span>
+            <input type="number" class="cart-qty-input" value="1" min="1" max="10" onchange="updateSubtotal(this)">
+            <span class="cart-subtotal">Subtotal: ₹1,899</span>
+          </div>
+        </div>
+        <button class="cart-remove" onclick="removeItem(this)">Remove</button>
+      </div>
+    </div>
+    <div class="cart-summary">
+      <span class="cart-total-label">Total:</span>
+      <span class="cart-total-value" id="cartTotal">₹12,496</span>
+      <button class="cart-checkout-btn">Proceed to Checkout</button>
+    </div>
+  </div>
+  <script>
+    function updateSubtotal(input) {
+      const item = input.closest('.cart-item');
+      const price = parseInt(item.getAttribute('data-price'));
+      const qty = parseInt(input.value);
+      const subtotal = price * qty;
+      item.querySelector('.cart-subtotal').textContent = 'Subtotal: ₹' + subtotal.toLocaleString();
+      updateTotal();
+    }
+    function updateTotal() {
+      let total = 0;
+      document.querySelectorAll('.cart-item').forEach(item => {
+        const price = parseInt(item.getAttribute('data-price'));
+        const qty = parseInt(item.querySelector('.cart-qty-input').value);
+        total += price * qty;
+      });
+      document.getElementById('cartTotal').textContent = '₹' + total.toLocaleString();
+    }
+    function removeItem(btn) {
+      const item = btn.closest('.cart-item');
+      item.parentNode.removeChild(item);
+      updateTotal();
+    }
+    // Initialize totals on page load
+    document.querySelectorAll('.cart-qty-input').forEach(input => updateSubtotal(input));
+  </script>
+</body>
+</html>

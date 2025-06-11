@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quick Cart - My Orders</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #f8f8fa;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    .orders-section {
+      max-width: 950px;
+      margin: 40px auto;
+      padding: 24px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+    }
+    .orders-title {
+      font-size: 2em;
+      font-weight: bold;
+      color: #65000b;
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+    }
+    .order-card {
+      background: #faf6f8;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px #65000b11;
+      margin-bottom: 32px;
+      padding: 22px 18px 18px 18px;
+      position: relative;
+    }
+    .order-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+      gap: 10px;
+    }
+    .order-id {
+      font-weight: bold;
+      color: #65000b;
+      font-size: 1.05em;
+      letter-spacing: 0.03em;
+    }
+    .order-date {
+      color: #888;
+      font-size: 1em;
+    }
+    .order-status {
+      padding: 5px 18px;
+      border-radius: 16px;
+      font-size: 0.98em;
+      font-weight: bold;
+      color: #fff;
+      background: #bbb;
+      margin-left: 8px;
+      display: inline-block;
+      letter-spacing: 0.04em;
+    }
+    .status-delivered { background: #0a7f4f; }
+    .status-shipped { background: #f1b600; color: #fff; }
+    .status-processing { background: #65000b; }
+    .status-cancelled { background: #a0302f; }
+    .order-products {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+    .order-product {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 16px 10px 10px;
+      box-shadow: 0 1px 6px #65000b0a;
+      min-width: 220px;
+      flex: 1 1 220px;
+    }
+    .order-product-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #eee;
+      flex-shrink: 0;
+    }
+    .order-product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .order-product-info {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .order-product-name {
+      font-size: 1.05em;
+      font-weight: bold;
+      color: #222;
+    }
+    .order-product-qty {
+      color: #888;
+      font-size: 0.97em;
+    }
+    .order-product-price {
+      color: #65000b;
+      font-size: 1.02em;
+      font-weight: bold;
+    }
+    .order-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .order-total {
+      font-size: 1.1em;
+      font-weight: bold;
+      color: #222;
+    }
+    .order-track-btn {
+      background: #65000b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 32px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .order-track-btn:hover {
+      background: #a0302f;
+    }
+    @media (max-width: 700px) {
+      .orders-section { padding: 8px; }
+      .order-header, .order-footer { flex-direction: column; align-items: flex-start; gap: 8px; }
+      .order-products { flex-direction: column; gap: 12px; }
+      .order-product { min-width: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="orders-section">
+    <div class="orders-title">My Orders</div>
+    
+    <!-- Order 1: Delivered -->
+    <div class="order-card">
+      <div class="order-header">
+        <span class="order-id">Order #QC10234</span>
+        <span class="order-date">Placed on: 2025-06-01</span>
+        <span class="order-status status-delivered">Delivered</span>
+      </div>
+      <div class="order-products">
+        <div class="order-product">
+          <div class="order-product-img">
+            <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80" alt="Handbag">
+          </div>
+          <div class="order-product-info">
+            <span class="order-product-name">Rosewood Leather Handbag</span>
+            <span class="order-product-qty">Qty: 1</span>
+            <span class="order-product-price">₹4,999</span>
+          </div>
+        </div>
+        <div class="order-product">
+          <div class="order-product-img">
+            <img src="shoes_html/shoe10.jpg" alt="Sneakers">
+          </div>
+          <div class="order-product-info">
+            <span class="order-product-name">Classic White Sneakers</span>
+            <span class="order-product-qty">Qty: 2</span>
+            <span class="order-product-price">₹2,799</span>
+          </div>
+        </div>
+      </div>
+      <div class="order-footer">
+        <span class="order-total">Total: ₹10,597</span>
+        <!-- No track button for delivered -->
+      </div>
+    </div>
+    
+    <!-- Order 2: Shipped -->
+    <div class="order-card">
+      <div class="order-header">
+        <span class="order-id">Order #QC10245</span>
+        <span class="order-date">Placed on: 2025-06-05</span>
+        <span class="order-status status-shipped">Shipped</span>
+      </div>
+      <div class="order-products">
+        <div class="order-product">
+          <div class="order-product-img">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Headphones">
+          </div>
+          <div class="order-product-info">
+            <span class="order-product-name">Wireless Headphones</span>
+            <span class="order-product-qty">Qty: 1</span>
+            <span class="order-product-price">₹1,899</span>
+          </div>
+        </div>
+      </div>
+      <div class="order-footer">
+        <span class="order-total">Total: ₹1,899</span>
+        <button class="order-track-btn" onclick="alert('Tracking info: Out for delivery!')">Track Order</button>
+      </div>
+    </div>
+    
+    <!-- Order 3: Processing -->
+    <div class="order-card">
+      <div class="order-header">
+        <span class="order-id">Order #QC10260</span>
+        <span class="order-date">Placed on: 2025-06-07</span>
+        <span class="order-status status-processing">Processing</span>
+      </div>
+      <div class="order-products">
+        <div class="order-product">
+          <div class="order-product-img">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Dress">
+          </div>
+          <div class="order-product-info">
+            <span class="order-product-name">Elegant Summer Dress</span>
+            <span class="order-product-qty">Qty: 1</span>
+            <span class="order-product-price">₹2,299</span>
+          </div>
+        </div>
+      </div>
+      <div class="order-footer">
+        <span class="order-total">Total: ₹2,299</span>
+        <button class="order-track-btn" onclick="alert('Tracking info: Order received and is being packed!')">Track Order</button>
+      </div>
+    </div>
+    
+    <!-- Order 4: Cancelled -->
+    <div class="order-card">
+      <div class="order-header">
+        <span class="order-id">Order #QC10210</span>
+        <span class="order-date">Placed on: 2025-05-28</span>
+        <span class="order-status status-cancelled">Cancelled</span>
+      </div>
+      <div class="order-products">
+        <div class="order-product">
+          <div class="order-product-img">
+            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" alt="Watch">
+          </div>
+          <div class="order-product-info">
+            <span class="order-product-name">Minimalist Rose Gold Watch</span>
+            <span class="order-product-qty">Qty: 1</span>
+            <span class="order-product-price">₹3,499</span>
+          </div>
+        </div>
+      </div>
+      <div class="order-footer">
+        <span class="order-total">Total: ₹3,499</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

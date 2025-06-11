@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Web Builder Team Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .banner {
+            position: relative;
+            width: 100vw;
+            height: 75vh; /* Reduced height to leave space below */
+            overflow: visible;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        /* 3D Slider Implementation - Based on Lun Dev Tutorial */
+        .slider {
+            position: absolute;
+            width: 180px; /* Reduced width */
+            height: 240px; /* Reduced height */
+            top: 30%; /* Positioned higher in the viewport */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            animation: autoRun 20s linear infinite;
+        }
+
+        .slider.stopped {
+            animation-play-state: paused;
+        }
+
+        .slider .item {
+            position: absolute;
+            inset: 0;
+            transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(450px); /* Reduced translateZ */
+            transition: all 0.5s ease;
+        }
+
+        .slider .item.active {
+            transform: rotateY(calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg)) translateZ(550px) scale(1.1); /* Adjusted scale */
+        }
+
+        /* Team Member Cards */
+        .team-card {
+            width: 180px; /* Reduced width */
+            height: 240px; /* Reduced height */
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 15px; /* Reduced padding */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .team-card:hover {
+            border-color: #ffd700;
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.3);
+        }
+
+        .team-card.highlighted {
+            border-color: #ff6b6b;
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 30px 60px rgba(255, 107, 107, 0.4);
+        }
+
+        .member-image {
+            width: 80px; /* Reduced size */
+            height: 80px; /* Reduced size */
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #ffd700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .member-image:hover {
+            transform: scale(1.05);
+            border-color: #ff6b6b;
+        }
+
+        .member-info {
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .member-name {
+            font-size: 16px; /* Reduced size */
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .member-role {
+            font-size: 11px; /* Reduced size */
+            color: #7f8c8d;
+            margin-bottom: 6px;
+            font-weight: 400;
+        }
+
+        .member-skills {
+            font-size: 9px; /* Reduced size */
+            color: #95a5a6;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .portfolio-btn {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 6px 14px; /* Reduced padding */
+            border-radius: 20px;
+            font-size: 10px; /* Reduced size */
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .portfolio-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* 3D Animation Keyframes */
+        @keyframes autoRun {
+            from {
+                transform: perspective(1000px) rotateX(-16deg) rotateY(0deg);
+            }
+            to {
+                transform: perspective(1000px) rotateX(-16deg) rotateY(360deg);
+            }
+        }
+
+        /* Text Content */
+        .content-container {
+            position: absolute;
+            width: 100%;
+            top: 60%; /* Positioned below the slider */
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .content {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .content p {
+            font-size: 1em;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .instructions {
+            text-align: center;
+            color: white;
+            margin-top: 20px;
+            max-width: 500px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+
+        .instructions p {
+            margin: 8px 0;
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        /* Image Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            animation: zoomIn 0.3s ease;
+        }
+
+        .modal-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #ffd700;
+            margin-bottom: 20px;
+        }
+
+        .modal-details h2 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .modal-details .role {
+            font-size: 16px;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .modal-details .bio {
+            font-size: 14px;
+            color: #34495e;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.3); }
+            to { transform: scale(1); }
+        }
+
+        /* Reset Button */
+        .reset-btn {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .reset-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .slider {
+                width: 140px;
+                height: 180px;
+                top: 28%;
+            }
+            
+            .team-card {
+                width: 140px;
+                height: 180px;
+                padding: 12px;
+            }
+            
+            .member-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .content h1 {
+                font-size: 1.8em;
+            }
+            
+            .content p {
+                font-size: 0.9em;
+            }
+            
+            .instructions {
+                padding: 10px;
+            }
+            
+            .instructions p {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div class="slider" id="slider" style="--quantity: 5">
+            <!-- Team Member 1 -->
+            <div class="item" style="--position: 1" data-member="1">
+                <div class="team-card">
+                    <a href="https://ashvn26.github.io/port-3/" target="_blank">
+                    <img src="developer_images/cd1.png" 
+                         alt="Ashwin" class="member-image" onclick="openModal(1)">
+                    <div class="member-info">
+                        <div class="member-name">Ashwin</div>
+                        <div class="member-role">Frontend Developer</div>
+                        <div class="member-skills">Python,Html,CSS and JS</div>
+                        <button class="portfolio-btn" onclick="openPortfolio('Ashwin')">Portfolio</button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="item" style="--position: 2" data-member="2">
+                <div class="team-card">
+                    <a href="https://nishanth1725.github.io/Html/" target="_blank">
+                    <img src="developer_images/cd2.jpg" 
+                         alt="Sarah Chen" class="member-image" onclick="openModal(2)">
+                    <div class="member-info">
+                        <div class="member-name">Nishanth</div>
+                        <div class="member-role">Backend Developer</div>
+                        <div class="member-skills">Node.js, Python,Java</div>
+                        <button class="portfolio-btn" onclick="openPortfolio('Nishanth')">Portfolio</button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="item" style="--position: 3" data-member="3">
+                <div class="team-card">
+                    <a href="https://sharath1409.github.io/MyPortfolio/" target="_blank">
+                    <img src="developer_images/cd3.jpg" 
+                         alt="Michael Torres" class="member-image" onclick="openModal(3)">
+                    <div class="member-info">
+                        <div class="member-name">Sharath</div>
+                        <div class="member-role">Frontend Developer</div>
+                        <div class="member-skills">HTML,CSS,JS and Python</div>
+                        <button class="portfolio-btn" onclick="openPortfolio('Sharath')">Portfolio</button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Team Member 4 -->
+            <div class="item" style="--position: 4" data-member="4">
+                <div class="team-card">
+                    <a href="https://sricharan1320.github.io/SriCharanPortfolio/" target="_blank">
+                    <img src="developer_images/cd4.jpg" 
+                         alt="Emma Wilson" class="member-image" onclick="openModal(4)">
+                         
+                    <div class="member-info">
+                        <div class="member-name">SriCharan</div>
+                        <div class="member-role">Full Stack Developer</div>
+                        <div class="member-skills">Html,CSS,JS and React.js</div>
+                        <button class="portfolio-btn" onclick="openPortfolio('SriCharan')">Portfolio</button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Team Member 5 -->
+            <div class="item" style="--position: 5" data-member="5">
+                <div class="team-card">
+                    <a href=" https://kanduriavinash.github.io/Portfolio/" target="_blank">
+                    <img src="developer_images/cd5.jpg" 
+                         alt="Avinash" class="member-image" onclick="openModal(5)">
+                    <div class="member-info">
+                        <div class="member-name">Avinash</div>
+                        <div class="member-role">Frontend Developer</div>
+                        <div class="member-skills">Html,CSS and JS</div>
+                        <button class="portfolio-btn" onclick="openPortfolio('Avinash')">Portfolio</button>
+                    </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <div class="content">
+                <h1>Web Builder Team</h1>
+                <p>Click on any team member to stop rotation and view details</p>
+            </div>
+            
+            <div class="instructions">
+                <p>Scroll down or click images for detailed profiles</p>
+                <p>Press ESC to reset rotation</p>
+            </div>
+        </div>
+
+        <button class="reset-btn" onclick="resetRotation()">Reset Rotation</button>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+           <img id="modalImage" class="modal-image" src="developer_images/d1.png" alt=""><
+            <div class="modal-details">
+                <h2 id="modalName"></h2>
+                <div class="role" id="modalRole"></div>
+                <div class="bio" id="modalBio"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.getElementById('slider');
+        const items = document.querySelectorAll('.item');
+        let isRotationStopped = false;
+
+    
+
+        // Click on team card to stop rotation
+        items.forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (e.target.classList.contains('member-image') || 
+                    e.target.classList.contains('portfolio-btn')) {
+                    return; // Don't stop rotation for image clicks or portfolio button
+                }
+                
+                stopRotation();
+                highlightCard(this);
+            });
+        });
+
+        function stopRotation() {
+            slider.classList.add('stopped');
+            isRotationStopped = true;
+        }
+
+        function resetRotation() {
+            slider.classList.remove('stopped');
+            items.forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.team-card').classList.remove('highlighted');
+            });
+            isRotationStopped = false;
+        }
+
+        function highlightCard(selectedItem) {
+            items.forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.team-card').classList.remove('highlighted');
+            });
+            
+            selectedItem.classList.add('active');
+            selectedItem.querySelector('.team-card').classList.add('highlighted');
+        }
+
+        // Modal functionality for image popup
+        function openModal(memberId) {
+            const member = teamMembers[memberId];
+            const modal = document.getElementById('imageModal');
+            
+            document.getElementById('modalImage').src = member.image;
+            document.getElementById('modalName').textContent = member.name;
+            document.getElementById('modalRole').textContent = member.role;
+            document.getElementById('modalBio').textContent = member.bio;
+            
+            modal.classList.add('show');
+            
+            // Stop rotation when modal opens
+            stopRotation();
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('show');
+        }
+
+        function openPortfolio(memberName) {
+            alert(`Opening ${memberName}'s portfolio...\n(In a real application, this would redirect to their portfolio page)`);
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('imageModal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+                if (isRotationStopped) {
+                    resetRotation();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

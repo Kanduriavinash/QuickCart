@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quick Cart - Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #f8f8fa;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .profile-container {
+      background: #fff;
+      padding: 40px 36px;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+      max-width: 500px;
+      width: 100%;
+    }
+    .profile-title {
+      font-size: 2em;
+      font-weight: bold;
+      color: #65000b;
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    label {
+      font-weight: bold;
+      color: #65000b;
+      margin-bottom: 6px;
+      font-size: 1em;
+    }
+    input {
+      padding: 12px 14px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: border-color 0.3s;
+      outline: none;
+    }
+    input:focus {
+      border-color: #a0302f;
+      background: #fff5f5;
+    }
+    button {
+      background: #65000b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 14px 0;
+      font-size: 1.2em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 12px;
+    }
+    button:hover {
+      background: #a0302f;
+    }
+    .success-message {
+      color: #0a7f4f;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <div class="profile-title">My Profile</div>
+    <form id="profileForm" autocomplete="off">
+      <label for="fullName">Full Name</label>
+      <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <label for="phone">Phone Number</label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" pattern="[0-9]{10}" required>
+
+      <button type="submit">Update Profile</button>
+    </form>
+    <div class="success-message" id="successMessage">Profile updated successfully!</div>
+  </div>
+  <script>
+    const form = document.getElementById('profileForm');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      if (form.checkValidity()) {
+        // Here you can add AJAX or fetch to send data to backend
+        successMessage.style.display = 'block';
+        setTimeout(() => { successMessage.style.display = 'none'; }, 3000);
+      } else {
+        form.reportValidity();
+      }
+    });
+  </script>
+</body>
+</html>

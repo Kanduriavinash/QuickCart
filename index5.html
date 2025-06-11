@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quick Cart - My Account</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #f8f8fa;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    .account-container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 24px;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+    }
+    .account-title {
+      font-size: 2em;
+      font-weight: bold;
+      color: #65000b;
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+    .tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      background: #fff;
+      color: #65000b;
+      border: 2px solid #65000b;
+      border-radius: 8px 8px 0 0;
+      padding: 10px 34px;
+      font-size: 1.08em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: #65000b;
+      color: #fff;
+    }
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: none;}
+    }
+    /* Login/Register */
+    .login-register-toggle {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      justify-content: center;
+    }
+    .login-register-toggle button {
+      background: #fff;
+      color: #65000b;
+      border: 2px solid #65000b;
+      border-radius: 8px;
+      padding: 8px 24px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .login-register-toggle .active, .login-register-toggle button:hover {
+      background: #65000b;
+      color: #fff;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    label {
+      font-weight: bold;
+      color: #65000b;
+      margin-bottom: 4px;
+      font-size: 1em;
+    }
+    input, select, textarea {
+      padding: 11px 14px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: border-color 0.3s;
+      outline: none;
+      resize: vertical;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #a0302f;
+      background: #fff5f5;
+    }
+    .account-btn {
+      background: #65000b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 0;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 8px;
+    }
+    .account-btn:hover {
+      background: #a0302f;
+    }
+    .success-message {
+      color: #0a7f4f;
+      font-weight: bold;
+      text-align: center;
+      margin-top: 18px;
+      display: none;
+    }
+    /* Profile, Address, Payment */
+    .profile-fields, .address-list, .payment-list {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .address-card, .payment-card {
+      background: #faf6f8;
+      border-radius: 10px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 6px #65000b0a;
+      margin-bottom: 8px;
+      position: relative;
+    }
+    .address-actions, .payment-actions {
+      margin-top: 10px;
+      display: flex;
+      gap: 10px;
+    }
+    .edit-btn, .delete-btn {
+      background: #fff;
+      color: #65000b;
+      border: 2px solid #65000b;
+      border-radius: 6px;
+      padding: 6px 16px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .edit-btn:hover {
+      background: #65000b;
+      color: #fff;
+    }
+    .delete-btn:hover {
+      background: #a0302f;
+      color: #fff;
+    }
+    .add-new-btn {
+      background: #65000b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 0;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    .add-new-btn:hover {
+      background: #a0302f;
+    }
+    @media (max-width: 700px) {
+      .account-container { padding: 8px; }
+      .tab-btn { padding: 8px 14px; font-size: 1em; }
+      form, .profile-fields, .address-list, .payment-list { max-width: 98vw; }
+    }
+  </style>
+</head>
+<body>
+  <div class="account-container">
+    <div class="account-title">My Account</div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="showTab('loginTab', this)">Login / Register</button>
+      <button class="tab-btn" onclick="showTab('profileTab', this)">Profile</button>
+      <button class="tab-btn" onclick="showTab('addressTab', this)">Address Book</button>
+      <button class="tab-btn" onclick="showTab('paymentTab', this)">Payment Methods</button>
+    </div>
+    <!-- Login/Register Tab -->
+    <div class="tab-content active" id="loginTab">
+      <div class="login-register-toggle">
+        <button class="active" onclick="toggleLoginRegister('login', this)">Login</button>
+        <button onclick="toggleLoginRegister('register', this)">Register</button>
+      </div>
+      <form id="loginForm">
+        <label for="loginEmail">Email Address</label>
+        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        <button class="account-btn" type="submit">Login</button>
+      </form>
+      <form id="registerForm" style="display:none;">
+        <label for="regName">Full Name</label>
+        <input type="text" id="regName" placeholder="Your full name" required>
+        <label for="regEmail">Email Address</label>
+        <input type="email" id="regEmail" placeholder="Enter your email" required>
+        <label for="regPassword">Password</label>
+        <input type="password" id="regPassword" placeholder="Create a password" required>
+        <button class="account-btn" type="submit">Register</button>
+      </form>
+      <div class="success-message" id="loginSuccess"></div>
+    </div>
+    <!-- Profile Tab -->
+    <div class="tab-content" id="profileTab">
+      <form class="profile-fields" id="profileForm">
+        <label for="profileName">Full Name</label>
+        <input type="text" id="profileName" value="SriCharan" required>
+        <label for="profileEmail">Email Address</label>
+        <input type="email" id="profileEmail" value="sricharan@email.com" required>
+        <label for="profilePhone">Phone Number</label>
+        <input type="tel" id="profilePhone" value="9247579897" required pattern="[0-9]{10}">
+        <button class="account-btn" type="submit">Update Profile</button>
+      </form>
+      <div class="success-message" id="profileSuccess"></div>
+    </div>
+    <!-- Address Book Tab -->
+    <div class="tab-content" id="addressTab">
+      <div class="address-list" id="addressList">
+        <div class="address-card">
+          <div><b>Home</b></div>
+          <div>Sharath</div>
+          <div>531 Rosewood Lane, Mumbai, MH, 400001</div>
+          <div>Phone: 6309750274</div>
+          <div class="address-actions">
+            <button class="edit-btn" onclick="editAddress(this)">Edit</button>
+            <button class="delete-btn" onclick="deleteAddress(this)">Delete</button>
+          </div>
+        </div>
+        <div class="address-card">
+          <div><b>Office</b></div>
+          <div>Ashwin </div>
+          <div>5th Floor, Tech Park, Bengaluru, KA, 560001</div>
+          <div>Phone: 9182250081</div>
+          <div class="address-actions">
+            <button class="edit-btn" onclick="editAddress(this)">Edit</button>
+            <button class="delete-btn" onclick="deleteAddress(this)">Delete</button>
+          </div>
+        </div>
+      </div>
+      <button class="add-new-btn" onclick="addAddress()">+ Add New Address</button>
+    </div>
+    <!-- Payment Methods Tab -->
+    <div class="tab-content" id="paymentTab">
+      <div class="payment-list" id="paymentList">
+        <div class="payment-card">
+          <div><b>Credit Card</b> - **** **** **** 1234</div>
+          <div>Name: Avinash</div>
+          <div>Expiry: 12/27</div>
+          <div class="payment-actions">
+            <button class="edit-btn" onclick="editPayment(this)">Edit</button>
+            <button class="delete-btn" onclick="deletePayment(this)">Delete</button>
+          </div>
+        </div>
+        <div class="payment-card">
+          <div><b>UPI</b> - nishanth@upi</div>
+          <div class="payment-actions">
+            <button class="edit-btn" onclick="editPayment(this)">Edit</button>
+            <button class="delete-btn" onclick="deletePayment(this)">Delete</button>
+          </div>
+        </div>
+      </div>
+      <button class="add-new-btn" onclick="addPayment()"><a href="index14.html" style="text-decoration: none;color: white;">+ Add New Payment Method</a></button>
+    </div>
+  </div>
+  <script>
+    // Tab switching
+    function showTab(tabId, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+    }
+    // Login/Register toggle
+    function toggleLoginRegister(type, btn) {
+      document.querySelectorAll('.login-register-toggle button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('loginForm').style.display = (type === 'login') ? 'flex' : 'none';
+      document.getElementById('registerForm').style.display = (type === 'register') ? 'flex' : 'none';
+      document.getElementById('loginSuccess').style.display = 'none';
+    }
+    // Login/Register form handlers (demo only)
+    document.getElementById('loginForm').onsubmit = function(e){
+      e.preventDefault();
+      document.getElementById('loginSuccess').textContent = "Login successful! Welcome back.";
+      document.getElementById('loginSuccess').style.display = 'block';
+    };
+    document.getElementById('registerForm').onsubmit = function(e){
+      e.preventDefault();
+      document.getElementById('loginSuccess').textContent = "Registration successful! Please log in.";
+      document.getElementById('loginSuccess').style.display = 'block';
+    };
+    // Profile update handler
+    document.getElementById('profileForm').onsubmit = function(e){
+      e.preventDefault();
+      document.getElementById('profileSuccess').textContent = "Profile updated successfully!";
+      document.getElementById('profileSuccess').style.display = 'block';
+    };
+    // Address Book handlers (demo only)
+    function editAddress(btn) { alert("Edit address (demo)"); }
+    function deleteAddress(btn) { btn.closest('.address-card').remove(); }
+    function addAddress() { alert("Add new address (demo)"); }
+    // Payment Methods handlers (demo only)
+    function editPayment(btn) { alert("Edit payment method (demo)"); }
+    function deletePayment(btn) { btn.closest('.payment-card').remove(); }
+    function addPayment() { alert("Add new payment method (demo)"); }
+  </script>
+</body>
+</html>

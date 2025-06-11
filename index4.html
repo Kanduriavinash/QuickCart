@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quick Cart - Menu Drawer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { margin: 0; font-family: Arial, sans-serif; }
+    .menu-btn {
+      background: #65000b;
+      color: #fff;
+      font-size: 1.25em;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 28px;
+      cursor: pointer;
+      margin: 30px 0 0 30px;
+      transition: background 0.2s;
+      letter-spacing: 0.12em;
+    }
+    .menu-btn:hover { background: #a0302f; }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.32);
+      z-index: 1000;
+      display: none;
+      transition: background 0.3s;
+    }
+    .drawer-overlay.open { display: block; }
+
+    .drawer-menu {
+      position: fixed;
+      top: 0; left: 0;
+      width: 310px;
+      max-width: 90vw;
+      height: 100vh;
+      background: #fff;
+      box-shadow: 2px 0 24px #65000b22;
+      z-index: 1100;
+      transform: translateX(-100%);
+      transition: transform 0.35s cubic-bezier(.77,0,.18,1);
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
+    .drawer-menu.open { transform: translateX(0); }
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 22px 10px 22px;
+      border-bottom: 1px solid #eee;
+    }
+    .drawer-title {
+      font-size: 1.3em;
+      letter-spacing: 0.13em;
+      color: #65000b;
+      font-weight: bold;
+    }
+    .drawer-close {
+      background: none;
+      border: none;
+      font-size: 2em;
+      color: #65000b;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 2px;
+      transition: color 0.2s;
+    }
+    .drawer-close:hover { color: #a0302f; }
+    .drawer-list {
+      list-style: none;
+      padding: 18px 0 0 0;
+      margin: 0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .drawer-list li {
+      margin: 0;
+    }
+    .drawer-list a {
+      display: block;
+      padding: 15px 32px;
+      color: #65000b;
+      text-decoration: none;
+      font-size: 1.08em;
+      font-weight: bold;
+      border-radius: 0 24px 24px 0;
+      letter-spacing: 0.04em;
+      transition: background 0.2s, color 0.2s;
+    }
+    .drawer-list a:hover, .drawer-list a:focus {
+      background: #131313;
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      .drawer-menu { width: 90vw; }
+      .drawer-title { font-size: 1.1em; }
+      .drawer-list a { padding: 13px 20px; font-size: 1em; }
+    }
+  </style>
+</head>
+<body>
+  <button class="menu-btn" onclick="openDrawer()">&#9776; Menu</button>
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <nav class="drawer-menu" id="drawerMenu" aria-label="Main menu">
+    <div class="drawer-header">
+      <span class="drawer-title">Menu</span>
+      <button class="drawer-close" onclick="closeDrawer()" aria-label="Close menu">&times;</button>
+    </div>
+    <ul class="drawer-list">
+      <li><a href="http://127.0.0.1:5500/myacc.html">My Account</a></li>
+      <li><a href="http://127.0.0.1:5500/profile.html">Profile</a></li>
+      <li><a href="http://127.0.0.1:5500/myorders.html">My Orders</a></li>
+      <li><a href="http://127.0.0.1:5500/mycart.html">My Cart</a></li>
+      <li><a href="http://127.0.0.1:5500/wishlist.html">Wishlist</a></li>
+      <li><a href="http://127.0.0.1:5500/customer.html">Customer Service</a></li>
+      <li><a href="http://127.0.0.1:5500/sell.html">Become a Seller</a></li>
+      <li><a href="http://127.0.0.1:5500/logout.html">Logout</a></li>
+    </ul>
+  </nav>
+  <script>
+    const drawerMenu = document.getElementById('drawerMenu');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    function openDrawer() {
+      drawerMenu.classList.add('open');
+      drawerOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      drawerMenu.classList.remove('open');
+      drawerOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    // Optional: close on ESC key
+    document.addEventListener('keydown', function(e){
+      if (e.key === "Escape") closeDrawer();
+    });
+  </script>
+</body>
+</html>

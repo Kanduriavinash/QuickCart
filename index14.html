@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Method with Half-Circle Card Brand Menu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rosewood: #65000b;
+      --teal: #65000bcc;
+      --bg: #fff;
+      --shadow: 0 8px 32px rgba(101,0,11,0.10);
+      --radius: 22px;
+      --glass: rgba(255,255,255,0.18);
+    }
+    body {
+      background: var(--bg);
+      font-family: 'Montserrat', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #222;
+    }
+    .payment-container {
+      max-width: 440px;
+      margin: 60px auto;
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 38px 32px 30px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .payment-title {
+      font-size: 2em;
+      color: var(--rosewood);
+      font-weight: 700;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+      text-align: center;
+    }
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+    .method-card {
+      background: #f6f7fb;
+      border-radius: 14px;
+      padding: 12px 18px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border 0.2s, background 0.2s, transform 0.18s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.08em;
+      color: var(--rosewood);
+      min-width: 110px;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(101,0,11,0.04);
+      position: relative;
+    }
+    .method-card.selected,
+    .method-card:hover {
+      border: 2px solid var(--teal);
+      background: #eafaf5;
+      transform: translateY(-2px) scale(1.03);
+      z-index: 2;
+      box-shadow: 0 6px 18px rgba(42,180,146,0.08);
+    }
+    .method-card img {
+      width: 26px;
+      height: 26px;
+    }
+    .payment-form label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: var(--rosewood);
+      font-size: 1em;
+    }
+    .payment-form input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1em;
+      margin-bottom: 18px;
+      background: #f9f9fc;
+      transition: border 0.2s;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    /* Force uppercase for cardholder name */
+    #card-name {
+      text-transform: uppercase;
+    }
+    .payment-form input:focus {
+      border: 1.5px solid var(--teal);
+      outline: none;
+    }
+    .pay-btn {
+      width: 100%;
+      background: linear-gradient(90deg, #65000b 60%, #2ab492 100%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 10px;
+      padding: 14px 0;
+      margin-top: 10px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(101,0,11,0.08);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.18s;
+      letter-spacing: 1px;
+    }
+    .pay-btn:hover {
+      background: linear-gradient(90deg, #2ab492 60%, #65000b 100%);
+      box-shadow: 0 6px 18px rgba(42,180,146,0.13);
+      transform: translateY(-2px) scale(1.02);
+    }
+    .form-section {
+      display: none;
+      opacity: 0;
+      transform: translateY(40px) scale(0.98);
+      transition: opacity 0.5s cubic-bezier(.4,2,.6,1), transform 0.5s cubic-bezier(.4,2,.6,1);
+      will-change: opacity, transform;
+    }
+    .form-section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      animation: fadeInUp 0.6s cubic-bezier(.4,2,.6,1);
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(60px) scale(0.97);}
+      100% { opacity: 1; transform: translateY(0) scale(1);}
+    }
+    .card-preview {
+      width: 100%;
+      max-width: 340px;
+      height: 200px;
+      background: var(--glass);
+      backdrop-filter: blur(9px) saturate(1.6);
+      border-radius: 20px;
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(101,0,11,0.20);
+      margin: 0 auto 22px auto;
+      padding: 24px 28px 18px 28px;
+      position: relative;
+      font-family: 'Montserrat', monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      overflow: hidden;
+      z-index: 1;
+      background-image: linear-gradient(135deg, #65000bcc 65%, #2ab492cc 100%);
+      transition: box-shadow 0.2s;
+    }
+    .card-preview .chip {
+      width: 48px;
+      height: 34px;
+      border-radius: 8px;
+      background: #e0dede;
+      position: absolute;
+      top: 28px;
+      left: 28px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 0;
+    }
+    .card-preview .chip img {
+      width: 44px;
+      height: 30px;
+      object-fit: contain;
+      display: block;
+      border-radius: 6px;
+    }
+    .card-preview .brand {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      width: 52px;
+      filter: drop-shadow(0 2px 8px #2222);
+    }
+    .card-preview .number {
+      font-size: 1.28em;
+      letter-spacing: 2.5px;
+      margin-bottom: 18px;
+      font-weight: 600;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.13);
+    }
+    .card-preview .details-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1em;
+      font-weight: 500;
+      letter-spacing: 1px;
+      opacity: 0.95;
+    }
+    .card-preview .label {
+      font-size: 0.7em;
+      opacity: 0.8;
+      font-weight: 400;
+      margin-bottom: 2px;
+      letter-spacing: 1.2px;
+    }
+    .half-circle-menu {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, 50%);
+      width: 220px;
+      height: 110px;
+      pointer-events: none;
+      z-index: 10;
+    }
+    .half-circle-bg {
+      position: absolute;
+      left: 0; bottom: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, #fff 60%, #eafaf5 100%);
+      border-top-left-radius: 200px;
+      border-top-right-radius: 200px;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      box-shadow: 0 -2px 16px #2ab49222;
+      opacity: 0.98;
+      z-index: 1;
+      pointer-events: auto;
+      transition: box-shadow 0.2s;
+    }
+    .brand-btn-circle {
+      position: absolute;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 2px 8px #2ab49222;
+      border: 2.5px solid transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1em;
+      color: var(--rosewood);
+      cursor: pointer;
+      pointer-events: auto;
+      transition: border 0.2s, background 0.2s, transform 0.18s;
+      z-index: 2;
+    }
+    .brand-btn-circle.selected,
+    .brand-btn-circle:hover {
+      border: 2.5px solid var(--teal);
+      background: #eafaf5;
+      transform: scale(1.08);
+    }
+    .brand-btn-circle img {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 2px 8px #2222);
+    }
+    .brand-btn-circle[data-brand="visa"]       { left: 7%;  bottom: 13px; }
+    .brand-btn-circle[data-brand="mastercard"] { left: 31%; bottom: 44px; }
+    .brand-btn-circle[data-brand="amex"]       { left: 65%; bottom: 44px; }
+    .brand-btn-circle[data-brand="rupay"]      { left: 87%; bottom: 13px; }
+    .cod-box {
+      background: #eafaf5;
+      border: 1.5px dashed var(--teal);
+      border-radius: 12px;
+      padding: 22px;
+      text-align: center;
+      color: var(--rosewood);
+      font-size: 1.18em;
+      font-weight: 600;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(42,180,146,0.06);
+    }
+    .cod-extra {
+      margin-top: 10px;
+      text-align: left;
+      font-size: 1em;
+      color: #65000bcc;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .track-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 24px 0 10px 0;
+      padding: 0 6px;
+      user-select: none;
+    }
+    .track-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+    }
+    .track-circle {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #eafaf5;
+      border: 2.5px solid #bdbdbd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1em;
+      font-weight: 700;
+      color: #bdbdbd;
+      position: relative;
+      z-index: 2;
+      transition: border 0.3s, color 0.3s, background 0.3s;
+    }
+    .track-step.active .track-circle,
+    .track-step.completed .track-circle {
+      border: 2.5px solid var(--teal);
+      background: var(--teal);
+      color: #fff;
+    }
+    .track-label {
+      font-size: 0.93em;
+      margin-top: 6px;
+      color: #bdbdbd;
+      font-weight: 600;
+      text-align: center;
+      transition: color 0.3s;
+    }
+    .track-step.active .track-label {
+      color: var(--teal);
+    }
+    .track-step.completed .track-label {
+      color: var(--rosewood);
+    }
+    .track-bar .track-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 13px;
+      left: 100%;
+      width: calc(100% - 28px);
+      height: 4px;
+      background: #bdbdbd;
+      z-index: 1;
+      transition: background 0.3s;
+    }
+    .track-step.completed:not(:last-child)::after {
+      background: var(--teal);
+    }
+    @media (max-width: 600px) {
+      .payment-container {
+        padding: 16px 4vw 20px 4vw;
+      }
+      .card-preview {
+        padding: 12px 8px 10px 10px;
+        height: 140px;
+        font-size: 0.82em;
+      }
+      .payment-title {
+        font-size: 1.3em;
+      }
+      .method-card {
+        font-size: 0.97em;
+        padding: 8px;
+        min-width: 80px;
+      }
+      .brand-btn-circle {
+        width: 38px;
+        height: 38px;
+      }
+      .brand-btn-circle img {
+        width: 22px;
+        height: 22px;
+      }
+      .track-label {
+        font-size: 0.83em;
+      }
+      .track-circle {
+        width: 22px;
+        height: 22px;
+        font-size: 0.9em;
+      }
+      .half-circle-menu {
+        width: 150px;
+        height: 75px;
+      }
+      .brand-btn-circle[data-brand="visa"]       { left: 7%;  bottom: 10px; }
+      .brand-btn-circle[data-brand="mastercard"] { left: 31%; bottom: 27px; }
+      .brand-btn-circle[data-brand="amex"]       { left: 65%; bottom: 27px; }
+      .brand-btn-circle[data-brand="rupay"]      { left: 87%; bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="payment-container">
+    <div class="payment-title">Pay Now</div>
+    <div class="payment-methods">
+      <div class="method-card" data-method="card">
+        <img src="https://img.icons8.com/color/48/000000/bank-card-front-side.png" alt="Card"> Card
+      </div>
+      <div class="method-card" data-method="upi">
+        <img src="https://img.icons8.com/color/48/000000/qr-code.png" alt="UPI"> UPI
+      </div>
+      <div class="method-card" data-method="paypal">
+        <img src="https://img.icons8.com/color/48/000000/paypal.png" alt="PayPal"> PayPal
+      </div>
+      <div class="method-card" data-method="applepay">
+        <img src="https://img.icons8.com/ios-filled/50/000000/mac-os.png" alt="Apple Pay"> Apple Pay
+      </div>
+      <div class="method-card" data-method="cod">
+        <img src="https://img.icons8.com/ios-filled/50/000000/money-bag.png" alt="COD"> Cash on Delivery
+      </div>
+    </div>
+    <form class="payment-form">
+      <!-- Credit Card -->
+      <div class="form-section" id="form-card" style="position:relative;">
+        <div class="card-preview" id="card-preview" style="overflow:visible;">
+          <div class="chip">
+            <img src="https://img.icons8.com/ios-filled/50/FFD700/sim-card-chip.png" alt="SIM Card" />
+          </div>
+          <img class="brand" id="card-brand" src="https://img.icons8.com/color/48/000000/visa.png" alt="Brand">
+          <div class="number" id="prev-card-number">•••• •••• •••• ••••</div>
+          <div class="details-row">
+            <div>
+              <div class="label">CARD HOLDER</div>
+              <span id="prev-card-name">YOUR NAME</span>
+            </div>
+            <div>
+              <div class="label">EXPIRES</div>
+              <span id="prev-card-expiry">MM/YY</span>
+            </div>
+          </div>
+          <!-- Half-circle menu (hidden by default) -->
+          <div class="half-circle-menu" id="halfCircleMenu" style="display:none;">
+            <div class="half-circle-bg"></div>
+            <button type="button" class="brand-btn-circle selected" data-brand="visa" title="Visa">
+              <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa">
+            </button>
+            <button type="button" class="brand-btn-circle" data-brand="mastercard" title="MasterCard">
+              <img src="https://img.icons8.com/color/48/000000/mastercard-logo.png" alt="MasterCard">
+            </button>
+            <button type="button" class="brand-btn-circle" data-brand="amex" title="Amex">
+              <img src="https://img.icons8.com/color/48/000000/amex.png" alt="Amex">
+            </button>
+            <button type="button" class="brand-btn-circle" data-brand="rupay" title="RuPay">
+              <img src="https://img.icons8.com/color/48/000000/rupay.png" alt="RuPay">
+            </button>
+          </div>
+          <button type="button" id="showCircleBtn" style="position:absolute;bottom:18px;left:50%;transform:translateX(-50%);background:var(--teal);color:#fff;border:none;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px #2ab49222;cursor:pointer;z-index:20;outline:none;">
+            <svg width="21" height="21" viewBox="0 0 20 20" fill="none"><path d="M10 16V4M10 4L5 9M10 4L15 9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <label for="card-number">Card Number</label>
+        <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" autocomplete="cc-number">
+        <label for="card-name">Cardholder Name</label>
+        <input type="text" id="card-name" placeholder="Full Name" maxlength="24" autocomplete="cc-name">
+        <div style="display:flex; gap:12px;">
+          <div style="flex:1">
+            <label for="card-expiry">Expiry</label>
+            <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" autocomplete="cc-exp">
+          </div>
+          <div style="flex:1">
+            <label for="card-cvc">CVC</label>
+            <input type="text" id="card-cvc" placeholder="123" maxlength="4" autocomplete="cc-csc">
+          </div>
+        </div>
+      </div>
+      <!-- UPI -->
+      <div class="form-section" id="form-upi">
+        <label for="upi-id">UPI ID</label>
+        <input type="text" id="upi-id" placeholder="yourname@bank" autocomplete="off">
+      </div>
+      <!-- PayPal -->
+      <div class="form-section" id="form-paypal">
+        <label for="paypal-email">PayPal Email</label>
+        <input type="email" id="paypal-email" placeholder="you@email.com" autocomplete="off">
+      </div>
+      <!-- Apple Pay -->
+      <div class="form-section" id="form-applepay">
+        <label for="applepay-id">Apple Pay ID</label>
+        <input type="text" id="applepay-id" placeholder="Apple ID or Phone" autocomplete="off">
+      </div>
+      <!-- Cash on Delivery -->
+      <div class="form-section" id="form-cod">
+        <div class="cod-box">
+          <span>&#128176; You will pay in cash when your order is delivered.</span>
+        </div>
+        <div class="cod-extra">
+          <span>Want order updates? Enter your UPI Ref/Phone:</span>
+        </div>
+        <input type="text" id="cod-contact" placeholder="UPI Ref or Mobile Number" autocomplete="off">
+
+        <!-- Live Tracking Bar -->
+        <div class="track-bar" id="track-bar">
+          <div class="track-step" data-step="0">
+            <div class="track-circle">&#128179;</div>
+            <div class="track-label">Order Placed</div>
+          </div>
+          <div class="track-step" data-step="1">
+            <div class="track-circle">&#127859;</div>
+            <div class="track-label">Preparing</div>
+          </div>
+          <div class="track-step" data-step="2">
+            <div class="track-circle">&#128666;</div>
+            <div class="track-label">Out for Delivery</div>
+          </div>
+          <div class="track-step" data-step="3">
+            <div class="track-circle">&#127873;</div>
+            <div class="track-label">Delivered</div>
+          </div>
+        </div>
+        <div style="font-size:0.97em; color:#888; text-align:center; margin-bottom:10px;">
+          <span id="track-status-msg">Your order has been placed!</span>
+        </div>
+        <div style="text-align:center;">
+          <button type="button" onclick="nextStep()" style="background:var(--teal);color:#fff;border:none;padding:8px 22px;border-radius:8px;font-size:1em;cursor:pointer;box-shadow:0 2px 8px #2ab49222;">Next Status</button>
+        </div>
+      </div>
+      <button class="pay-btn" type="submit">Add Payment Method</button>
+    </form>
+  </div>
+  <script>
+    // Payment method tab switching with animation
+    const methodCards = document.querySelectorAll('.method-card');
+    const formSections = document.querySelectorAll('.form-section');
+    methodCards.forEach(card => {
+      card.addEventListener('click', () => {
+        methodCards.forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        formSections.forEach(section => section.classList.remove('active'));
+        const method = card.getAttribute('data-method');
+        const section = document.getElementById('form-' + method);
+        if(section) section.classList.add('active');
+        // Hide half-circle menu if switching away from card
+        if(method !== "card") {
+          document.getElementById('halfCircleMenu').style.display = "none";
+        }
+      });
+    });
+
+    // Show/hide half-circle menu
+    const showCircleBtn = document.getElementById('showCircleBtn');
+    const halfCircleMenu = document.getElementById('halfCircleMenu');
+    showCircleBtn.addEventListener('click', () => {
+      halfCircleMenu.style.display = halfCircleMenu.style.display === "block" ? "none" : "block";
+    });
+
+    // Half-circle brand selection logic
+    const brandBtnsCircle = document.querySelectorAll('.brand-btn-circle');
+    const cardBrand = document.getElementById('card-brand');
+    brandBtnsCircle.forEach(btn => {
+      btn.addEventListener('click', () => {
+        brandBtnsCircle.forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        // Set card brand logo
+        const brand = btn.getAttribute('data-brand');
+        switch(brand) {
+          case 'visa':
+            cardBrand.src = "https://img.icons8.com/color/48/000000/visa.png";
+            break;
+          case 'mastercard':
+            cardBrand.src = "https://img.icons8.com/color/48/000000/mastercard-logo.png";
+            break;
+          case 'amex':
+            cardBrand.src = "https://img.icons8.com/color/48/000000/amex.png";
+            break;
+          case 'rupay':
+            cardBrand.src = "https://img.icons8.com/color/48/000000/rupay.png";
+            break;
+          default:
+            cardBrand.src = "https://img.icons8.com/color/48/000000/bank-card-front-side.png";
+        }
+        halfCircleMenu.style.display = "none";
+      });
+    });
+
+    // Credit Card Live Preview
+    const cardNumberInput = document.getElementById('card-number');
+    const cardNameInput = document.getElementById('card-name');
+    const cardExpiryInput = document.getElementById('card-expiry');
+    const prevCardNumber = document.getElementById('prev-card-number');
+    const prevCardName = document.getElementById('prev-card-name');
+    const prevCardExpiry = document.getElementById('prev-card-expiry');
+
+    cardNumberInput.addEventListener('input', function() {
+      let val = this.value.replace(/\D/g, '').substring(0,16);
+      let formatted = val.replace(/(.{4})/g, '$1 ').trim();
+      this.value = formatted;
+      prevCardNumber.textContent = formatted.padEnd(19, '•');
+    });
+    // Cardholder name: always uppercase
+    cardNameInput.addEventListener('input', function() {
+      this.value = this.value.toUpperCase();
+      prevCardName.textContent = this.value || 'YOUR NAME';
+    });
+    cardExpiryInput.addEventListener('input', function() {
+      let val = this.value.replace(/\D/g, '').substring(0,4);
+      if(val.length > 2) val = val.substring(0,2) + '/' + val.substring(2,4);
+      this.value = val;
+      prevCardExpiry.textContent = val || 'MM/YY';
+    });
+
+    // Live Tracking Bar Logic
+    let currentStep = 0;
+    const steps = [
+      "Your order has been placed!",
+      "Your food is being prepared.",
+      "Your order is out for delivery.",
+      "Order delivered! Enjoy your meal."
+    ];
+    function updateTrackBar() {
+      const trackSteps = document.querySelectorAll('.track-step');
+      trackSteps.forEach((step, idx) => {
+        step.classList.remove('active', 'completed');
+        if(idx < currentStep) step.classList.add('completed');
+        else if(idx === currentStep) step.classList.add('active');
+      });
+      document.getElementById('track-status-msg').textContent = steps[currentStep];
+    }
+    function nextStep() {
+      currentStep = (currentStep + 1) % steps.length;
+      updateTrackBar();
+    }
+    // Initialize on page load
+    updateTrackBar();
+  </script>
+</body>
+</html>
