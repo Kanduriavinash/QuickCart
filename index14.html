@@ -399,7 +399,8 @@
 </head>
 <body>
   <div class="payment-container">
-    <div class="payment-title">Pay Now</div>
+    <div class="payment-title">Pay Now<br>
+    <h3>Total to pay: ₹<span id="paymentTotal"></span></h3></div>
     <div class="payment-methods">
       <div class="method-card" data-method="card">
         <img src="https://img.icons8.com/color/48/000000/bank-card-front-side.png" alt="Card"> Card
@@ -526,6 +527,10 @@
     </form>
   </div>
   <script>
+    window.addEventListener('DOMContentLoaded', function() {
+  const total = localStorage.getItem('quickCartTotal') || '0.00';
+  document.getElementById('paymentTotal').textContent = total;
+});
     // Payment method tab switching with animation
     const methodCards = document.querySelectorAll('.method-card');
     const formSections = document.querySelectorAll('.form-section');
