@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quick Cart - Register</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #232f3e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .register-container {
+      background: #ffffff;
+      padding: 40px 30px 30px 30px;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 340px;
+      animation: fadeIn 1.2s;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: url('https://cdn-icons-png.flaticon.com/512/1170/1170678.png') no-repeat center/contain;
+      margin-bottom: 18px;
+      animation: bounce 1.2s;
+    }
+    @keyframes bounce {
+      0%   { transform: translateY(-60px);}
+      60%  { transform: translateY(10px);}
+      100% { transform: translateY(0);}
+    }
+    .title {
+      font-size: 2em;
+      font-weight: bold;
+      color: #232f3e;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+    .subtitle {
+      color: #37475a;
+      font-size: 1em;
+      margin-bottom: 30px;
+    }
+    .register-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .register-form input {
+      padding: 12px 14px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: border 0.2s;
+      outline: none;
+    }
+    .register-form input:focus {
+      border: 1.5px solid #ff9900;
+      background: #fffaf2;
+    }
+    .register-form button {
+      background: #65000B;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 0;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 8px;
+    }
+    .register-form button:hover {
+      background: #65000B;
+    }
+    .signin-link {
+      margin-top: 18px;
+      font-size: 0.98em;
+      color: #37475a;
+    }
+    .signin-link a {
+      color: #65000B;
+      text-decoration: none;
+      font-weight: bold;
+      margin-left: 3px;
+      transition: color 0.2s;
+    }
+    .signin-link a:hover {
+      color: #65000B;
+    }
+    .message {
+      margin-top: 15px;
+      font-size: 1em;
+      padding: 10px 0;
+      width: 100%;
+      text-align: center;
+      border-radius: 6px;
+      display: none;
+    }
+    .message.error {
+      background: #fff3e0;
+      color: #e08800;
+      border: 1px solid #ff9900;
+      display: block;
+    }
+    .mini-popup {
+      display: none;
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+      background: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(35,47,62,0.25);
+      padding: 44px 50px 34px 50px;
+      min-width: 340px;
+      text-align: center;
+      animation: popIn 0.45s;
+    }
+    @keyframes popIn {
+      0% { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
+      80% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); }
+    }
+    .slide-in {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(-100%);
+      animation: slideIn 0.7s forwards;
+    }
+    .slide-in.delay-1 { animation-delay: 0.1s; }
+    .slide-in.delay-2 { animation-delay: 0.7s; }
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    .mini-popup .popup-title {
+      font-size: 2.8em;
+      color: #232f3e;
+      font-weight: bold;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      line-height: 1.1;
+    }
+    .mini-popup .popup-success {
+      font-size: 2em;
+      font-weight: bold;
+      color: #37475a;
+      margin-bottom: 18px;
+      margin-top: 6px;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+    .mini-popup .home-icon {
+      width: 60px;
+      height: 60px;
+      margin: 10px auto 0 auto;
+      display: block;
+      filter: drop-shadow(0 2px 8px #ff9900aa);
+      animation: popIn 0.7s;
+    }
+    .close-btn {
+      margin-top: 18px;
+      background: #ff9900;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 32px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .close-btn:hover {
+      background: #e08800;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container" id="registerContainer">
+    <div class="logo"></div>
+    <div class="title">Quick Cart</div>
+    <div class="subtitle">Create your account</div>
+    <form class="register-form" id="registerForm" autocomplete="off">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="email" id="email" placeholder="Email Address" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <div class="message" id="message"></div>
+    <div class="signin-link">
+      Already have an account?
+      <a href="index1.html">Sign in</a>
+    </div>
+  </div>
+
+  <!-- Mini Popup -->
+  <div class="mini-popup" id="miniPopup">
+    <div class="popup-title" id="popupTitle"></div>
+    <div class="popup-success" id="popupSuccess"></div>
+    <img src="https://cdn-icons-png.flaticon.com/512/1946/1946436.png" alt="Home Icon" class="home-icon">
+    <button class="close-btn" onclick="closePopup()">Close</button>
+  </div>
+
+  <script>
+    const regForm = document.getElementById('registerForm');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const message = document.getElementById('message');
+    const miniPopup = document.getElementById('miniPopup');
+    const popupTitle = document.getElementById('popupTitle');
+    const popupSuccess = document.getElementById('popupSuccess');
+
+    regForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      message.style.display = 'none';
+      message.classList.remove('error', 'success');
+
+      if (!nameInput.value.trim() || !emailInput.value.trim() || !passwordInput.value.trim() || !confirmPasswordInput.value.trim()) {
+        message.textContent = 'Please fill in all fields.';
+        message.classList.add('error');
+        message.style.display = 'block';
+        return;
+      }
+
+      if (passwordInput.value.length < 6) {
+        message.textContent = 'Password must be at least 6 characters.';
+        message.classList.add('error');
+        message.style.display = 'block';
+        return;
+      }
+
+      if (passwordInput.value !== confirmPasswordInput.value) {
+        message.textContent = 'Passwords do not match.';
+        message.classList.add('error');
+        message.style.display = 'block';
+        return;
+      }
+
+      popupTitle.innerHTML = <span class="slide-in delay-1">${nameInput.value},</span>;
+      popupSuccess.innerHTML = <span class="slide-in delay-2">Registration Successful</span>;
+      miniPopup.style.display = 'block';
+    });
+
+    function closePopup() {
+      miniPopup.style.display = 'none';
+    }
+  </script>
+</body>
+</html>

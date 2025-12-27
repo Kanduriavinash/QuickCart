@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quick Cart - Login</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #232f3e, #37475a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .login-container {
+      background: #fff;
+      padding: 40px 30px 30px 30px;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 340px;
+      animation: fadeIn 1.2s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: url('https://cdn-icons-png.flaticon.com/512/1170/1170678.png') no-repeat center/contain;
+      margin-bottom: 18px;
+      animation: bounce 1.2s;
+    }
+
+    @keyframes bounce {
+      0%   { transform: translateY(-60px); }
+      60%  { transform: translateY(10px); }
+      100% { transform: translateY(0); }
+    }
+
+    .title {
+      font-size: 2em;
+      font-weight: bold;
+      color:#65000B;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      color: #555;
+      font-size: 1em;
+      margin-bottom: 30px;
+    }
+
+    .login-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .login-form input {
+      padding: 12px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: border 0.2s;
+      outline: none;
+    }
+
+    .login-form input:focus {
+      border: 1.5px solid #ff9900;
+      background: #fff9f2;
+    }
+
+    .login-form button {
+      background: #65000B;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 0;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 8px;
+    }
+
+    .login-form button:hover {
+      background: #65000B;
+    }
+
+    .register-link {
+      margin-top: 18px;
+      font-size: 0.98em;
+      color: #666;
+    }
+
+    .register-link a {
+      color: #65000B;
+      text-decoration: none;
+      font-weight: bold;
+      margin-left: 3px;
+      transition: color 0.2s;
+    }
+
+    .register-link a:hover {
+      color: #65000B;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-size: 1em;
+      padding: 10px 0;
+      width: 100%;
+      text-align: center;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .message.error {
+      background: #fff1e0;
+      color: #a94442;
+      border: 1px solid #ff9900;
+      display: block;
+    }
+
+    .message.success {
+      background: #e0ffe8;
+      color: #098a2f;
+      border: 1px solid #0f6;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo"></div>
+    <div class="title">Quick Cart</div>
+    <div class="subtitle">Sign in to your account</div>
+    <form class="login-form" id="loginForm" autocomplete="off">
+      <input type="email" id="loginEmail" placeholder="Email Address" required />
+      <input type="password" id="loginPassword" placeholder="Password" required />
+      <button type="submit"><a href="index3.html" style="text-decoration: none;color: white;">Sign In</a></button>
+    </form>
+    <div class="message" id="loginMessage"></div>
+    <div class="register-link">
+      New to Quick Cart?
+      <a href="index2.html">Create an account</a>
+    </div>
+  </div>
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const loginEmail = document.getElementById('loginEmail');
+    const loginPassword = document.getElementById('loginPassword');
+    const loginMessage = document.getElementById('loginMessage');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      loginMessage.style.display = 'none';
+      loginMessage.classList.remove('error', 'success');
+
+      if (!loginEmail.value.trim() || !loginPassword.value.trim()) {
+        loginMessage.textContent = 'Please enter both email and password.';
+        loginMessage.classList.add('error');
+        loginMessage.style.display = 'block';
+        return;
+      }
+
+      loginMessage.textContent = 'Sign in successful! Welcome back to Quick Cart.';
+      loginMessage.classList.add('success');
+      loginMessage.style.display = 'block';
+
+      // setTimeout(() => window.location.href = 'dashboard.html', 1500);
+    });
+  </script>
+</body>
+</html>
